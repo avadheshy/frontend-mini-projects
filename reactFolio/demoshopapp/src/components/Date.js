@@ -1,11 +1,8 @@
-function Date(props){
-    const day = props.date
-    const month = props.month
-    const year = props.year
-    console.log(props)
+function ItemDate({date,month,year}){
+
     return (
-        <div className="bg-green-900 m-[25px] p-[10px]">
-        <span>{day}</span>
+        <div className="bg-green-900 text-white m-4 p-4 rounded-lg shadow-md">
+        <span>{date}</span>
         <span>{month}</span>
         <span>{year}</span>
 
@@ -13,4 +10,4 @@ function Date(props){
     )
   
 }
-export default Date
+export default ItemDate

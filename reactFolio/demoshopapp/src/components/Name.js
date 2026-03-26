@@ -1,11 +1,11 @@
- function Name( props){
-    const name =props.name
+ function Name( {name,children}){
+
     return (
         <div>
-            <h1 className="bg-green-900 m-[25px] p-[10px]">
+            <h1 className="bg-green-900 text-white m-4 p-4 rounded-lg shadow-md">
                 {name}
             </h1>
-                {props.children}
+                {children}
         </div>
     )
  }
