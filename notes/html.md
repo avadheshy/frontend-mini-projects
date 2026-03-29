@@ -1,535 +1,351 @@
-# CSS Notes 🎨
+# HTML Notes 🌐
 
 ---
 
-## Selectors & Specificity
-
-```css
-*           { }  /* Universal — lowest priority */
-div         { }  /* Element */
-.classname  { }  /* Class */
-#idname     { }  /* ID — higher priority */
-div p       { }  /* Descendant */
-div > p     { }  /* Direct child */
-div + p     { }  /* Adjacent sibling (immediately after) */
-div ~ p     { }  /* General sibling (any after) */
-[type="text"] { } /* Attribute selector */
-```
-
-**Specificity order (low → high):**
-`* → element → class → ID → inline style → !important`
+## What is HTML?
+**HyperText Markup Language** — the skeleton of every webpage.
+- **HyperText** → links that connect pages
+- **Markup** → annotating content with tags
+- **Language** → a set of rules/syntax
 
 ---
 
-## Display Property
+## Tags, Elements & Attributes
 
-Controls how an element is rendered in the layout:
-
-```css
-display: block;        /* full width, starts new line (default for div, p, h1) */
-display: inline;       /* only as wide as content, no width/height (default for span, a) */
-display: inline-block; /* inline position BUT respects width/height/padding */
-display: none;         /* removes element from layout (invisible + no space) */
-display: flex;         /* flex container */
-display: grid;         /* grid container */
+### Tag vs Element
+```html
+<p>Hello</p>
+<!-- <p> = opening tag, </p> = closing tag, the whole thing = element -->
 ```
 
-**`display: none` vs `visibility: hidden`:**
-- `display: none` → element is gone, no space taken
-- `visibility: hidden` → element is invisible but **still occupies space**
-
-```css
-/* Useful: center a block element horizontally */
-.box {
-  display: block;
-  width: 300px;
-  margin: 0 auto;
-}
+### Attribute (Property + Value)
+```html
+<a href="https://google.com" target="_blank">Click</a>
+<!-- href = property, "https://google.com" = value -->
 ```
 
 ---
 
-## Box Model
+## Block vs Inline Elements
 
-Every element is a box:
+| Block | Inline |
+|-------|--------|
+| Takes full width, starts on new line | Only takes content width, stays inline |
+| `<div>`, `<p>`, `<h1>`, `<ul>`, `<table>` | `<span>`, `<a>`, `<img>`, `<strong>`, `<em>` |
 
-```
-┌─────────────────────────┐
-│         Margin          │
-│  ┌───────────────────┐  │
-│  │      Border       │  │
-│  │  ┌─────────────┐  │  │
-│  │  │   Padding   │  │  │
-│  │  │  ┌───────┐  │  │  │
-│  │  │  │Content│  │  │  │
-│  │  │  └───────┘  │  │  │
-│  │  └─────────────┘  │  │
-│  └───────────────────┘  │
-└─────────────────────────┘
-```
+---
 
-```css
-box-sizing: border-box; /* padding+border included in width — use this always */
+## Headings (h1–h6)
+Only **6 levels** because they represent a document outline — like chapters → sub-sections → sub-sub-sections. Going deeper loses semantic meaning.
+
+```html
+<h1>Main Title</h1>   <!-- Only one per page ideally -->
+<h2>Section</h2>
+<h3>Sub-section</h3>
+<!-- ... up to h6 -->
 ```
 
 ---
 
-## Colors
+## Tables
 
-```css
-color: red;                   /* named */
-color: #ff5733;               /* hex */
-color: rgb(255, 87, 51);      /* rgb */
-color: rgba(255, 87, 51, 0.5); /* rgba — 4th param = opacity */
-color: hsl(14, 100%, 60%);    /* hsl */
+```html
+<table>
+  <colgroup>
+    <col style="background-color: lightblue"> <!-- style whole column -->
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Name</th>   <!-- th = table header -->
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Alice</td>  <!-- td = table data -->
+      <td>25</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+**Spanning:**
+```html
+<td colspan="2">Spans 2 columns</td>
+<td rowspan="2">Spans 2 rows</td>
 ```
 
 ---
 
-## Units
+## Quotations & Figures
 
-| Unit | What it is |
-|------|-----------|
-| `px` | Fixed pixels |
-| `%` | Relative to **parent** element |
-| `em` | Relative to **current** element's font-size |
-| `rem` | Relative to **root** (`html`) font-size |
-| `vw` | 1% of **viewport width** |
-| `vh` | 1% of **viewport height** |
+```html
+<!-- Block-level long quote -->
+<blockquote cite="https://source.com">
+  Long quoted text here...
+</blockquote>
 
-**`1%` vs `1vw`:**
-- `1%` → 1% of the *parent container's* width
-- `1vw` → 1% of the *browser window's* width (always)
+<!-- Inline short quote -->
+<p>He said <q>Hello world</q></p>
 
----
+<!-- cite = title of a work -->
+<p>From <cite>The Great Gatsby</cite></p>
 
-## Gradients
-
-```css
-/* Linear */
-background: linear-gradient(to right, red, blue);
-background: linear-gradient(45deg, red, yellow, blue);
-
-/* Radial (circular) */
-background: radial-gradient(circle, red, blue);
-
-/* Conic (pie chart style) */
-background: conic-gradient(red 0deg, blue 180deg, green 360deg);
+<!-- Figure with caption -->
+<figure>
+  <img src="photo.jpg" alt="A photo">
+  <figcaption>Photo description</figcaption>
+</figure>
 ```
 
 ---
 
-## Shadows
+## Anchor Tag Use Cases
 
-```css
-/* Text shadow: x y blur color */
-text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+```html
+<!-- 1. URL -->
+<a href="https://google.com" target="_blank">Open Google</a>
 
-/* Box shadow: x y blur spread color */
-box-shadow: 4px 4px 10px 2px rgba(0,0,0,0.3);
-box-shadow: inset 0 0 10px gray; /* inset = inside */
+<!-- 2. Email -->
+<a href="mailto:hello@example.com">Send Email</a>
+
+<!-- 3. Call -->
+<a href="tel:+911234567890">Call Us</a>
+
+<!-- 4. Bookmark (same page) -->
+<a href="#section1">Go to Section</a>
+<div id="section1">Target Section</div>
 ```
 
 ---
 
-## Pseudo-classes
+## Semantic Tags
 
-Style elements based on their **state** or **position**:
+Semantic tags tell the browser (and screen readers) **what the content means**.
 
-```css
-/* State */
-a:hover   { color: red; }         /* mouse over */
-a:active  { color: blue; }        /* being clicked */
-input:focus { outline: 2px solid blue; } /* focused */
-input:disabled { opacity: 0.5; }
-input:checked  { accent-color: green; }
+```html
+<header>   <!-- Site/section header, logo, nav -->
+<nav>      <!-- Navigation links -->
+<main>     <!-- Primary content of the page (only ONE per page) -->
+<section>  <!-- A themed grouping of content -->
+<article>  <!-- Standalone content (blog post, news) -->
+<footer>   <!-- Footer info, links, copyright -->
+<aside>    <!-- Sidebar, tangentially related content -->
+```
 
-/* Position */
-li:first-child  { font-weight: bold; }
-li:last-child   { border: none; }
-li:nth-child(2) { background: lightgray; }
-li:nth-child(odd)  { background: #f5f5f5; }
-li:nth-child(even) { background: white; }
+### Common Questions
 
-/* Negation */
-p:not(.special) { color: gray; }
+**`<h1>` vs `<header>`**
+- `<h1>` = a text heading (level 1)
+- `<header>` = a container for intro content (can contain `<h1>`, logo, nav)
 
-/* Combined with elements */
-.card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+**Can `<article>` go inside `<section>` and vice versa?**
+- ✅ Yes, both ways are valid. `<section>` groups related content; `<article>` is self-contained.
+
+**Can `<header>` go inside `<footer>`?**
+- Technically valid HTML, but bad practice semantically. Avoid it.
+
+**Can there be multiple `<header>` tags?**
+- ✅ Yes! Each `<section>` or `<article>` can have its own `<header>`.
+
+**`<body>` vs `<main>`**
+- `<body>` = everything visible on the page
+- `<main>` = the **primary** content only (excludes nav, header, footer)
+
+---
+
+## Quick Reference: Common Tags
+
+```html
+<!-- Text -->
+<p>, <span>, <strong>, <em>, <br>, <hr>
+
+<!-- Lists -->
+<ul> <li>Unordered</li> </ul>
+<ol> <li>Ordered</li> </ol>
+
+<!-- Media -->
+<img src="img.jpg" alt="description">
+<video src="vid.mp4" controls></video>
+
+<!-- Form -->
+<form action="/submit" method="POST">
+  <input type="text" name="username" placeholder="Enter name">
+  <input type="submit" value="Submit">
+</form>
+
+<!-- Div & Span (non-semantic containers) -->
+<div>block container</div>
+<span>inline container</span>
 ```
 
 ---
 
-## Typography
+## `<head>` & Meta Tags
 
-```css
-/* Font */
-font-family: "Inter", Arial, sans-serif; /* fallback chain */
-font-size: 16px;
-font-weight: 400;   /* 100–900, or normal/bold */
-font-style: italic;
-font-variant: small-caps;
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">                              <!-- character encoding -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- responsive! -->
+  <meta name="description" content="Page description for SEO">
+  <title>Page Title</title>
 
-/* Spacing */
-line-height: 1.6;       /* 1.5–1.8 is readable for body text */
-letter-spacing: 0.05em;
-word-spacing: 4px;
+  <link rel="stylesheet" href="style.css">           <!-- CSS file -->
+  <link rel="icon" href="favicon.ico">               <!-- browser tab icon -->
 
-/* Text */
-text-align: left | center | right | justify;
-text-decoration: none | underline | line-through | overline;
-text-transform: uppercase | lowercase | capitalize;
-text-indent: 2em;      /* indent first line */
+  <!-- Scripts: defer = load after HTML parsed, async = load in parallel -->
+  <script src="app.js" defer></script>
+</head>
+```
 
-/* Overflow */
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis; /* "Hello Wor..." truncation */
+> **Always include the viewport meta tag** — without it, your responsive CSS won't work on mobile.
 
-/* Multi-line clamp */
-display: -webkit-box;
--webkit-line-clamp: 3;
--webkit-box-orient: vertical;
-overflow: hidden;
+---
+
+## Forms — Input Types & Validation
+
+```html
+<form action="/submit" method="POST">
+
+  <!-- label ties to input via for/id -->
+  <label for="email">Email:</label>
+  <input type="email"    id="email"    name="email"    required>
+
+  <input type="text"     name="user"   placeholder="Username" minlength="3" maxlength="20">
+  <input type="password" name="pass">
+  <input type="number"   name="age"    min="1" max="120">
+  <input type="date"     name="dob">
+  <input type="file"     name="photo"  accept="image/*">
+  <input type="range"    name="vol"    min="0" max="100" step="5">
+  <input type="color"    name="color">
+  <input type="checkbox" name="agree"  value="yes">
+  <input type="radio"    name="gender" value="male">
+
+  <!-- Pattern validation (regex) -->
+  <input type="text" pattern="[A-Za-z]{3,}" title="At least 3 letters">
+
+  <!-- Textarea -->
+  <textarea name="message" rows="4" cols="40"></textarea>
+
+  <!-- Fieldset + Legend (group related inputs) -->
+  <fieldset>
+    <legend>Address</legend>
+    <input type="text" name="city">
+  </fieldset>
+
+  <!-- Datalist (autocomplete suggestions) -->
+  <input list="fruits" name="fruit">
+  <datalist id="fruits">
+    <option value="Apple">
+    <option value="Mango">
+  </datalist>
+
+  <button type="submit">Submit</button>
+  <button type="reset">Reset</button>
+</form>
+```
+
+**Common validation attributes:** `required`, `min`, `max`, `minlength`, `maxlength`, `pattern`, `disabled`, `readonly`
+
+---
+
+## HTML Entities
+
+Use when you need to display reserved/special characters:
+
+| Character | Entity |
+|-----------|--------|
+| `<`       | `&lt;` |
+| `>`       | `&gt;` |
+| `&`       | `&amp;` |
+| `"`       | `&quot;` |
+| non-breaking space | `&nbsp;` |
+| `©`      | `&copy;` |
+| `→`      | `&rarr;` |
+
+```html
+<p>5 &lt; 10 and 10 &gt; 5</p>
+<p>Copyright &copy; 2024</p>
+<p>First&nbsp;&nbsp;&nbsp;Second</p> <!-- multiple spaces -->
 ```
 
 ---
 
-## z-index & Stacking Context
+## `data-*` Custom Attributes
 
-`z-index` controls which element appears **on top** when elements overlap.
+Store extra data on elements without using hidden inputs or JS variables.
 
-```css
-/* Only works on positioned elements (not static) */
-.modal   { position: fixed;    z-index: 1000; }
-.overlay { position: absolute; z-index: 999; }
-.card    { position: relative; z-index: 1; }
+```html
+<button data-user-id="42" data-role="admin" onclick="handleClick(this)">
+  Delete User
+</button>
 
-/* Higher z-index = on top */
-/* Elements with same z-index: later in HTML = on top */
-```
-
-> A new stacking context is created when `position` + `z-index`, `opacity < 1`, `transform`, or `filter` are applied. Children can't escape their parent's stacking context.
-
----
-
-## Border & Border-radius
-
-```css
-border: 1px solid #ccc;             /* shorthand: width style color */
-border-top: 2px dashed red;
-border-radius: 8px;                 /* all corners */
-border-radius: 50%;                 /* circle (on square element) */
-border-radius: 10px 20px 10px 20px; /* top-left top-right bottom-right bottom-left */
-
-outline: 2px solid blue;            /* like border but outside, doesn't affect layout */
-outline-offset: 4px;
+<script>
+  function handleClick(el) {
+    console.log(el.dataset.userId); // "42"
+    console.log(el.dataset.role);   // "admin"
+  }
+</script>
 ```
 
 ---
 
-## object-fit & object-position
+## `<details>` & `<summary>` (Native Accordion)
 
-Controls how `<img>` or `<video>` fits inside its container (like `background-size` but for content elements):
+```html
+<details>
+  <summary>Click to expand</summary>
+  <p>Hidden content shown when expanded.</p>
+</details>
 
-```css
-img {
-  width: 300px;
-  height: 200px;
-  object-fit: cover;    /* fill container, crop overflow (most common) */
-  object-fit: contain;  /* fit inside, letterbox */
-  object-fit: fill;     /* stretch to fit (distorts) */
-
-  object-position: center;   /* where to anchor the image */
-  object-position: top left;
-}
+<details open>  <!-- open = expanded by default -->
+  <summary>FAQ: What is HTML?</summary>
+  <p>HyperText Markup Language...</p>
+</details>
 ```
 
 ---
 
-## Media Queries (Responsive Design)
+## `<iframe>` — Embed External Content
 
-Apply CSS only when the screen matches a condition:
+```html
+<!-- Embed another page or map -->
+<iframe
+  src="https://www.google.com/maps/embed?..."
+  width="600"
+  height="450"
+  style="border:0"
+  allowfullscreen
+  loading="lazy">
+</iframe>
 
-```css
-/* Mobile-first approach (recommended) */
-/* Base styles = mobile */
-.container { width: 100%; }
-
-/* Tablet and up */
-@media (min-width: 768px) {
-  .container { width: 720px; }
-}
-
-/* Desktop and up */
-@media (min-width: 1024px) {
-  .container { width: 960px; }
-}
-
-/* Large screens */
-@media (min-width: 1280px) {
-  .container { width: 1200px; }
-}
-
-/* Common breakpoints (Tailwind-style) */
-/* sm: 640px  md: 768px  lg: 1024px  xl: 1280px */
-
-/* Other conditions */
-@media (max-width: 600px) { }       /* only small screens */
-@media (orientation: landscape) { } /* landscape mode */
-@media print { }                    /* print styles */
-
-/* Example: stack columns on mobile */
-.grid { display: grid; grid-template-columns: 1fr 1fr; }
-
-@media (max-width: 768px) {
-  .grid { grid-template-columns: 1fr; }
-}
+<!-- Embed YouTube -->
+<iframe
+  width="560" height="315"
+  src="https://www.youtube.com/embed/VIDEO_ID"
+  allow="autoplay; encrypted-media"
+  allowfullscreen>
+</iframe>
 ```
 
 ---
 
-## Dimensions & Overflow
+## Responsive Images
 
-```css
-width: 300px;
-height: 200px;
-min-width: 100px;  max-width: 600px;
-min-height: 50px;  max-height: 400px;
+```html
+<!-- srcset: browser picks best size based on screen -->
+<img
+  src="photo-800.jpg"
+  srcset="photo-400.jpg 400w, photo-800.jpg 800w, photo-1200.jpg 1200w"
+  sizes="(max-width: 600px) 400px, 800px"
+  alt="A responsive photo">
 
-overflow: visible; /* default, content spills out */
-overflow: hidden;  /* clips overflow */
-overflow: scroll;  /* always shows scrollbar */
-overflow: auto;    /* scrollbar only when needed */
-```
-
----
-
-## Position
-
-```css
-position: static;    /* default, normal flow */
-position: relative;  /* offset from its normal position */
-position: absolute;  /* removed from flow, positioned to nearest relative parent */
-position: fixed;     /* stays fixed to viewport (doesn't scroll) */
-position: sticky;    /* relative until scroll threshold, then fixed */
-```
-
-**`background-attachment: fixed` vs `position: fixed`:**
-- `background-attachment: fixed` → background image doesn't scroll (parallax effect)
-- `position: fixed` → the *entire element* is fixed to the screen
-
----
-
-## 2D Transforms
-
-```css
-transform: translateX(50px);        /* move */
-transform: translateY(-20px);
-transform: translate(50px, -20px);  /* move x & y */
-transform: scale(1.5);              /* scale up 150% */
-transform: rotate(45deg);           /* rotate */
-transform: skewX(20deg);            /* skew */
-/* Multiple transforms */
-transform: translate(50px) rotate(45deg) scale(1.2);
-```
-
-## 3D Transforms
-
-```css
-perspective: 500px; /* set on parent */
-transform: rotateX(45deg);
-transform: rotateY(45deg);
-transform: translateZ(100px);
-transform: rotate3d(1, 1, 0, 45deg);
-```
-
----
-
-## Flexbox
-
-### Container Properties
-```css
-display: flex;
-
-flex-direction: row | row-reverse | column | column-reverse;
-flex-wrap: nowrap | wrap | wrap-reverse;
-flex-flow: row wrap; /* shorthand for direction + wrap */
-
-justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly;
-align-items: stretch | flex-start | flex-end | center | baseline;
-align-content: flex-start | center | space-between; /* multi-line alignment */
-gap: 10px;
-```
-
-### Item Properties
-```css
-order: 2;           /* change visual order */
-flex-grow: 1;       /* how much to grow */
-flex-shrink: 1;     /* how much to shrink */
-flex-basis: 200px;  /* initial size before grow/shrink */
-flex: 1 1 200px;    /* shorthand: grow shrink basis */
-align-self: center; /* override align-items for this item */
-```
-
-**`flex-basis` vs `width`:**
-- `flex-basis` sets size *along the main axis* (respects flex context)
-- `width` is absolute; `flex-basis` works with `flex-grow`/`flex-shrink`
-
-**`<img>` vs `background-image`:**
-- `<img>` → content image (semantic, accessible, in HTML)
-- `background-image` → decorative image (in CSS, can't add alt text)
-
----
-
-## Grid
-
-### Container Basics
-```css
-display: grid;
-grid-template-columns: 200px 200px 200px;    /* 3 cols */
-grid-template-columns: repeat(3, 1fr);       /* 3 equal cols */
-grid-template-rows: 100px auto;
-gap: 10px;          /* shorthand for row-gap + column-gap */
-```
-
-### Advanced Grid
-```css
-grid-template-columns: repeat(3, minmax(100px, 1fr)); /* min/max size */
-grid-auto-rows: 150px;   /* auto-generated row height */
-
-/* fr unit = fraction of available space */
-grid-template-columns: 1fr 2fr 1fr; /* 25% 50% 25% */
-```
-
-### Placing Items
-```css
-/* By line numbers */
-grid-column: 1 / 3;  /* start line 1, end line 3 */
-grid-row: 1 / 2;
-
-/* Named areas */
-grid-template-areas:
-  "header header"
-  "sidebar main"
-  "footer footer";
-
-.header  { grid-area: header; }
-.sidebar { grid-area: sidebar; }
-```
-
-### Alignment
-```css
-/* Container */
-justify-content: center;   /* horizontal alignment of grid */
-align-content: center;     /* vertical alignment of grid */
-justify-items: center;     /* horizontal align all cells */
-align-items: center;       /* vertical align all cells */
-place-items: center;       /* shorthand align-items + justify-items */
-
-/* Item */
-justify-self: end;
-align-self: start;
-place-self: center;
-```
-
-**`grid` vs `inline-grid`:**
-- `grid` → block-level grid (takes full width)
-- `inline-grid` → inline-level grid (only as wide as content)
-
----
-
-## Useful Functions
-
-```css
-width: calc(100% - 40px);       /* math */
-width: min(500px, 100%);        /* smaller of the two */
-width: max(200px, 50%);         /* larger of the two */
-width: clamp(200px, 50%, 800px); /* min, preferred, max */
-```
-
----
-
-## `::before` and `::after`
-
-```css
-/* Pseudo-elements — inject content without HTML */
-.button::before {
-  content: "→ ";   /* required, can be empty "" */
-  color: red;
-}
-.card::after {
-  content: "";
-  display: block;
-  height: 2px;
-  background: blue;
-}
-```
-
----
-
-## CSS Variables
-
-```css
-/* Global (on :root) */
-:root {
-  --primary-color: #3498db;
-  --font-size: 16px;
-}
-
-/* Local (on element) */
-.card {
-  --card-padding: 20px;
-  padding: var(--card-padding);
-}
-
-/* Usage */
-color: var(--primary-color);
-font-size: var(--font-size);
-```
-
-**`:root` vs `*` (universal selector):**
-- `:root` targets the `<html>` element → highest specificity for variables
-- `*` targets every element → lower specificity, used for resets
-
----
-
-## Transitions & Animations
-
-### Transition (simple A→B)
-```css
-transition: property duration timing-function delay;
-transition: background-color 0.3s ease 0s;
-transition: all 0.3s ease;
-
-/* Timing functions */
-ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier(...)
-```
-
-### Animation (keyframe-based)
-```css
-@keyframes slideIn {
-  from { transform: translateX(-100px); opacity: 0; }
-  to   { transform: translateX(0);      opacity: 1; }
-}
-
-/* Or with percentages */
-@keyframes pulse {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-.box {
-  animation-name: slideIn;
-  animation-duration: 0.5s;
-  animation-delay: 0.2s;
-  animation-timing-function: ease;
-  animation-iteration-count: infinite; /* or a number */
-  animation-direction: alternate;       /* normal | reverse | alternate */
-  animation-fill-mode: forwards;        /* keeps end state */
-
-  /* Shorthand */
-  animation: slideIn 0.5s ease 0.2s infinite alternate forwards;
-}
+<!-- picture: different images for different breakpoints -->
+<picture>
+  <source media="(max-width: 600px)" srcset="small.jpg">
+  <source media="(max-width: 1200px)" srcset="medium.jpg">
+  <img src="large.jpg" alt="Responsive image">
+</picture>
 ```
