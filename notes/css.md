@@ -119,13 +119,83 @@ overflow: auto;    /* scrollbar only when needed */
 
 ## Position
 
-```css
-position: static;    /* default, normal flow */
-position: relative;  /* offset from its normal position */
-position: absolute;  /* removed from flow, positioned to nearest relative parent */
-position: fixed;     /* stays fixed to viewport (doesn't scroll) */
-position: sticky;    /* relative until scroll threshold, then fixed */
-```
+# CSS Position Property
+
+## 1. static
+- Default position
+- Follows normal document flow
+- `top`, `left`, `right`, `bottom`, `z-index` do NOT work
+
+---
+
+## 2. relative
+- Stays in normal flow
+- Can be moved using `top`, `left`, etc.
+- Original space is preserved
+- Creates a reference for `absolute` children
+
+---
+
+## 3. absolute
+- Removed from normal document flow
+- Positioned relative to nearest **positioned ancestor**
+  - (`relative`, `absolute`, `fixed`, `sticky`)
+- If no positioned parent → relative to viewport
+- Can overlap other elements
+
+---
+
+## 4. fixed
+- Removed from normal document flow
+- Positioned relative to **viewport**
+- Does NOT move on scroll
+- Always stays in the same place on screen
+
+---
+
+## 5. sticky
+- Acts like `relative` initially
+- Becomes `fixed` when scroll reaches a threshold
+- Requires `top`, `bottom`, `left`, or `right`
+- Works only within its parent container
+
+---
+
+# Important Notes
+
+## Positioned Ancestor
+- `absolute` looks for nearest parent with:
+  - `position: relative | absolute | fixed | sticky`
+
+---
+
+## z-index
+- Works only on positioned elements
+- Does NOT work with `position: static`
+
+---
+
+## Sticky Limitations
+- Needs a value like `top: 0`
+- Does NOT work if parent has:
+  - `overflow: hidden` or `overflow: auto`
+
+---
+
+## Flow Behavior
+- `static` and `relative` → stay in normal flow
+- `absolute` and `fixed` → removed from flow
+- Removed elements do NOT reserve space
+
+---
+
+# Quick Summary
+
+- static → normal flow  
+- relative → move within flow  
+- absolute → removed, parent-based  
+- fixed → removed, viewport-based  
+- sticky → scroll + stick  
 
 **`background-attachment: fixed` vs `position: fixed`:**
 - `background-attachment: fixed` → background image doesn't scroll (parallax effect)

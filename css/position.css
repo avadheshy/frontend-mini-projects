@@ -1,0 +1,28 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+.wrapper{
+    width: 100vw;
+    height: 5000px;
+    background-color:rebeccapurple;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px;
+    justify-content: start;
+    position: relative;
+}
+#box22{
+    position: relative;
+    background-color:red;
+    bottom: 100px;
+    left: 50px;
+}
+.box{
+    width: 400px;
+    height: 400px;
+    background-color: peru;
+    border: 1px solid black;
+}

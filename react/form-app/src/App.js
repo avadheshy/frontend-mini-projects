@@ -26,6 +26,7 @@ function App() {
 
   function changeHandler(event) {
     const { name, value, checked, type } = event.target;
+  
 
     setFormData(prev => ({
       ...prev,
@@ -34,7 +35,7 @@ function App() {
   }
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center">
+    <div className="h-screen w-screen flex justify-center">
       <form onSubmit={submitHandler} className="flex flex-col gap-3">
 
         {/* First Name */}
@@ -45,7 +46,7 @@ function App() {
           placeholder="Avadhesh"
           value={formdata.firstName}
           onChange={changeHandler}
-        />
+          className="border-4 border-black focus:border-[1px] focus:outline-none transition-all"        />
 
         {/* Last Name */}
         <label>Last Name</label>
@@ -55,6 +56,7 @@ function App() {
           placeholder="Yadav"
           value={formdata.lastName}
           onChange={changeHandler}
+          className="border-4 border-black focus:border-[1px] focus:outline-none transition-all"
         />
 
         {/* Email */}
@@ -65,6 +67,7 @@ function App() {
           placeholder="email"
           value={formdata.email}
           onChange={changeHandler}
+          className="border-4 border-black focus:border-[1px] focus:outline-none transition-all"  
         />
 
         {/* Country */}
@@ -88,6 +91,8 @@ function App() {
           name="street"
           value={formdata.street}
           onChange={changeHandler}
+          placeholder='Jharsa'
+        className="border-4 border-black focus:border-[1px] focus:outline-none transition-all"
         />
 
         <label>State</label>
@@ -96,6 +101,8 @@ function App() {
           name="state"
           value={formdata.state}
           onChange={changeHandler}
+          placeholder='Hariyana'
+          className="border-4 border-black focus:border-[1px] focus:outline-none transition-all"
         />
 
         <label>City</label>
@@ -104,6 +111,8 @@ function App() {
           name="city"
           value={formdata.city}
           onChange={changeHandler}
+          placeholder='Gurgaon'
+          className="border-4 border-black focus:border-[1px] focus:outline-none transition-all"
         />
 
         <label>Pincode</label>
@@ -112,6 +121,8 @@ function App() {
           name="pincode"
           value={formdata.pincode}
           onChange={changeHandler}
+          placeholder='122003'
+className="border-4 border-black focus:border-[1px] focus:outline-none transition-all"
         />
 
         {/* Checkboxes */}
