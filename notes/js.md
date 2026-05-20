@@ -1,33 +1,99 @@
-# JavaScript —  Notes
-
+# JavaScript — Notes
 
 ---
 
-##  Table of Contents
-1. [How JS Works — Execution Context](#1-how-js-works--execution-context)
-2. [Call Stack & Hoisting](#2-call-stack--hoisting)
-3. [Variables — var, let, const](#3-variables--var-let-const)
-4. [Scope, Scope Chain & Lexical Environment](#4-scope-scope-chain--lexical-environment)
-5. [Closures](#5-closures)
-6. [First Class Functions](#6-first-class-functions)
-7. [Callback Functions & Event Loop](#7-callback-functions--event-loop)
-8. [JS Engine Internals](#8-js-engine-internals)
-9. [Higher Order Functions — map / filter / reduce](#9-higher-order-functions--map--filter--reduce)
-10. [Primitive & Reference Types](#10-primitive--reference-types)
-11. [Operators](#11-operators)
-12. [Conditions & Loops](#12-conditions--loops)
-13. [Objects & Functions (Deep Dive)](#13-objects--functions-deep-dive)
-14. [Arrays & Array Methods](#14-arrays--array-methods)
-15. [DOM Manipulation](#15-dom-manipulation)
-16. [Events](#16-events)
-17. [Async JS — Promises & Async/Await](#17-async-js--promises--asyncawait)
-18. [Destructuring, Spread & Rest](#18-destructuring-spread--rest)
-19. [ES6 Classes & Inheritance](#19-es6-classes--inheritance)
-20. [Error Handling](#20-error-handling)
-21. [ES Modules](#21-es-modules)
-22. [this, bind, call, apply](#22-this-bind-call-apply)
-23. [JSON & localStorage](#23-json--localstorage)
-24. [Object Utility Methods](#24-object-utility-methods)
+## Table of Contents
+- [JavaScript — Notes](#javascript--notes)
+  - [Table of Contents](#table-of-contents)
+  - [1. How JS Works — Execution Context](#1-how-js-works--execution-context)
+    - [Two Phases of Context Creation:](#two-phases-of-context-creation)
+  - [2. Call Stack \& Hoisting](#2-call-stack--hoisting)
+    - [Call Stack](#call-stack)
+    - [Hoisting](#hoisting)
+  - [3. Variables — var, let, const](#3-variables--var-let-const)
+    - [let \& const — Block Scope](#let--const--block-scope)
+    - [Temporal Dead Zone (TDZ) / Dead Zone](#temporal-dead-zone-tdz--dead-zone)
+    - [Syntax Errors vs Type Errors](#syntax-errors-vs-type-errors)
+    - [Shadowing](#shadowing)
+  - [4. Scope, Scope Chain \& Lexical Environment](#4-scope-scope-chain--lexical-environment)
+    - [Scope Chain](#scope-chain)
+    - [Lexical Environment](#lexical-environment)
+    - [`undefined` vs `not defined`](#undefined-vs-not-defined)
+    - [JS is Loosely Typed](#js-is-loosely-typed)
+  - [5. Closures](#5-closures)
+    - [Block Scope also gives Closure](#block-scope-also-gives-closure)
+    - [setTimeout + Closure Interview Question](#settimeout--closure-interview-question)
+    - [Uses of Closures](#uses-of-closures)
+  - [6. First Class Functions](#6-first-class-functions)
+    - [Types of Functions](#types-of-functions)
+    - [Parameters vs Arguments](#parameters-vs-arguments)
+    - [Difference: Function Statement vs Expression](#difference-function-statement-vs-expression)
+    - [Functions as First Class Citizens](#functions-as-first-class-citizens)
+  - [7. Callback Functions \& Event Loop](#7-callback-functions--event-loop)
+    - [Callback Function](#callback-function)
+    - [Callback Hell](#callback-hell)
+    - [Web APIs (provided by browser, not JS)](#web-apis-provided-by-browser-not-js)
+    - [Event Loop — How Async Works](#event-loop--how-async-works)
+    - [Task Queue vs Microtask Queue](#task-queue-vs-microtask-queue)
+  - [8. JS Engine Internals](#8-js-engine-internals)
+    - [JS Engine = JIT Compiler](#js-engine--jit-compiler)
+    - [Memory in JS Engine](#memory-in-js-engine)
+    - [Inline Caching](#inline-caching)
+  - [9. Higher Order Functions — map / filter / reduce](#9-higher-order-functions--map--filter--reduce)
+    - [map — transform each element, returns new array](#map--transform-each-element-returns-new-array)
+    - [filter — keep elements that pass a test](#filter--keep-elements-that-pass-a-test)
+    - [reduce — collapse to a single value](#reduce--collapse-to-a-single-value)
+    - [Chaining (map + filter together)](#chaining-map--filter-together)
+    - [Polyfill for map (How map works internally)](#polyfill-for-map-how-map-works-internally)
+  - [10. Primitive \& Reference Types](#10-primitive--reference-types)
+    - [Primitive Types (copied by value)](#primitive-types-copied-by-value)
+    - [Reference Types (copied by reference)](#reference-types-copied-by-reference)
+    - [Shallow Copy vs Deep Copy](#shallow-copy-vs-deep-copy)
+    - [typeof](#typeof)
+  - [11. Operators](#11-operators)
+  - [12. Conditions \& Loops](#12-conditions--loops)
+  - [13. Objects \& Functions (Deep Dive)](#13-objects--functions-deep-dive)
+    - [Objects](#objects)
+    - [Getter \& Setter](#getter--setter)
+    - [Built-in — Math \& String](#built-in--math--string)
+  - [14. Arrays \& Array Methods](#14-arrays--array-methods)
+  - [15. DOM Manipulation](#15-dom-manipulation)
+    - [Selecting Elements](#selecting-elements)
+    - [Reading / Changing Content](#reading--changing-content)
+    - [Attributes \& Styles](#attributes--styles)
+    - [Create / Add / Remove Elements](#create--add--remove-elements)
+  - [16. Events](#16-events)
+    - [Event Phases](#event-phases)
+    - [Event Delegation (efficient pattern)](#event-delegation-efficient-pattern)
+    - [Prototype Inheritance](#prototype-inheritance)
+  - [17. Async JS — Promises \& Async/Await](#17-async-js--promises--asyncawait)
+    - [Promises](#promises)
+    - [Async / Await](#async--await)
+    - [Fetch API](#fetch-api)
+    - [setTimeout](#settimeout)
+  - [18. Destructuring, Spread \& Rest](#18-destructuring-spread--rest)
+    - [Destructuring](#destructuring)
+    - [Spread \& Rest](#spread--rest)
+  - [19. ES6 Classes \& Inheritance](#19-es6-classes--inheritance)
+    - [Constructor](#constructor)
+    - [Class](#class)
+  - [20. Error Handling](#20-error-handling)
+  - [21. ES Modules](#21-es-modules)
+  - [22. `this`, bind, call, apply](#22-this-bind-call-apply)
+    - [`this` Rules](#this-rules)
+    - [call, apply, bind](#call-apply-bind)
+  - [23. JSON \& localStorage](#23-json--localstorage)
+  - [24. Object Utility Methods](#24-object-utility-methods)
+  - [25. Currying](#25-currying)
+  - [26. IIFE](#26-iife)
+  - [27. Prototype \& Prototype Inheritance](#27-prototype--prototype-inheritance)
+  - [28. Memoization](#28-memoization)
+  - [29. Polyfills](#29-polyfills)
+  - [30. Debouncing](#30-debouncing)
+  - [31. Mutation Observer](#31-mutation-observer)
+  - [32. Memory Leak](#32-memory-leak)
+  - [33. Recursive Functions](#33-recursive-functions)
+  - [Quick Reference Cheatsheet](#quick-reference-cheatsheet)
 
 ---
 
@@ -84,6 +150,8 @@ console.log(y);   // ReferenceError (let in TDZ)
 let y = 10;
 ```
 
+> In hoisting, we can access the value before declaration. Only `var` we can use — `let`/`const` give a ReferenceError (Dead Zone).
+
 ---
 
 ## 3. Variables — var, let, const
@@ -107,7 +175,7 @@ console.log(c); // 30 — var leaked
 console.log(a); // ReferenceError
 ```
 
-### Temporal Dead Zone (TDZ)
+### Temporal Dead Zone (TDZ) / Dead Zone
 - Time between the **start of block** and the **let/const declaration line**.
 - Accessing variable in TDZ → `ReferenceError`.
 - `let` & `const` are hoisted, but placed in TDZ — **not initialized**.
@@ -130,6 +198,8 @@ y = 10; // TypeError: Assignment to constant variable
 ```
 
 ### Shadowing
+- A variable in a smaller scope **overwrites** (shadows) the one in the larger scope.
+
 ```js
 let a = 100;
 {
@@ -152,6 +222,7 @@ console.log(a); // 100
 ### Lexical Environment
 - Every execution context has a **Lexical Environment** = its local memory + reference to parent's lexical environment.
 - **Scope chain = chain of lexical environments**.
+- Inner functions have access to outer function's variables (**Lexical Scope**).
 
 ```js
 function outer() {
@@ -178,7 +249,7 @@ typeof x;       // "string"
 
 ## 5. Closures
 
-> A **closure** is a function that **remembers** variables from its outer (lexical) scope even after the outer function has returned.
+> A **closure** is created when a function is defined inside another function, and the inside function can access the variables of the outside function. It **remembers** variables from its outer (lexical) scope even after the outer function has returned.
 
 ```js
 function makeCounter() {
@@ -201,28 +272,9 @@ counter(); // 3
 let a = 20; let x = 30; // gives lexical scope → closure
 ```
 
-### Closure = function + lexical environment (its outer scope)
-```js
-// Closure is created when a function is returned/used from its outer scope
-function outer() {
-  let b = 10;
-  return function inner() {
-    console.log(b); // closes over 'b'
-  };
-}
-const fn = outer();
-fn(); // 10 — still accessible via closure
-```
-
-### Shadowing works similar in closures
-```js
-// Shadowing works in function scope as closures
-// works similar to function's lexical scope
-```
-
 ### setTimeout + Closure Interview Question
 ```js
-//  var — all callbacks share the SAME 'i' (prints 6,6,6,6,6)
+// var — all callbacks share the SAME 'i' (prints 6,6,6,6,6)
 function x() {
   for (var i = 1; i <= 5; i++) {
     setTimeout(function() {
@@ -240,7 +292,7 @@ function x() {
   }
 }
 
-//  Fix with var using closure
+// Fix with var using closure
 function x() {
   for (var i = 1; i <= 5; i++) {
     function close(i) {          // new scope per iteration
@@ -272,19 +324,22 @@ function x() {
 ### Types of Functions
 
 ```js
-// 1. Function Statement (aka Function Declaration) — hoisted 
+// 1. Function Statement (aka Function Declaration) — hoisted
 function a() {
   console.log("a called");
 }
 
-// 2. Function Expression — NOT hoisted 
+// 2. Function Expression — NOT hoisted
 var b = function(param1) {
   return function xyz() {};
 };
-console.log(b()); // works after declaration
 
 // 3. Anonymous Function — no name, used as a value
 var fn = function() { console.log("anonymous"); };
+// Often used in callbacks:
+setTimeout(function() {
+  console.log("Hey");
+}, 200);
 
 // 4. Named Function Expression
 var c = function myFunc() {
@@ -297,6 +352,14 @@ const square = x => x * x;
 const greet = name => {
   return `Hello ${name}`;
 };
+
+// 6. Named Function — reusable with a specific name
+function greet(name) {
+  return `Hello, ${name}`;
+}
+console.log(greet("Satyam"));
+
+// 7. IIFE — see section 26
 ```
 
 ### Parameters vs Arguments
@@ -308,7 +371,7 @@ add(5, 10);             // 5, 10 → arguments (values passed while calling)
 ### Difference: Function Statement vs Expression
 | Feature | Function Statement | Function Expression |
 |---------|-------------------|---------------------|
-| Hoisted |  Yes |  No |
+| Hoisted | Yes | No |
 | Named | Always | Optional |
 | Usage | Declaration | Assigned as value |
 
@@ -347,8 +410,20 @@ x(function y() {
 });
 ```
 
-- JS is **synchronous** and **single-threaded** → but callbacks let us handle async tasks.
-- They may take **longer** instead of **5 seconds** sometimes due to microtask/macrotask queue behavior.
+### Callback Hell
+> Occurs when you have **nested callbacks**, making the code difficult to read and maintain.
+
+```js
+// Example of callback hell (pyramid of doom)
+getData(function(a) {
+  getMoreData(a, function(b) {
+    getEvenMore(b, function(c) {
+      // deeply nested — hard to read & maintain
+    });
+  });
+});
+// Solution: use Promises or async/await
+```
 
 ### Web APIs (provided by browser, not JS)
 - `setTimeout()`
@@ -386,11 +461,14 @@ These are **not part of JS** — they are given to JS by the browser through the
 
 **Priority:** Microtask Queue > Callback Queue
 
+> **Event Loop** is a mechanism that enables JavaScript, being single-threaded, to handle asynchronous operations efficiently.
+
 ### Task Queue vs Microtask Queue
 - **Microtask Queue** (higher priority):
   - Promise callbacks (`.then`, `.catch`, `.finally`)
   - `queueMicrotask()`
   - `MutationObserver`
+  - A special queue for asynchronous callback functions that should be executed immediately after the current task.
 - **Callback Queue / Task Queue** (lower priority):
   - `setTimeout`, `setInterval`
   - DOM events
@@ -403,39 +481,22 @@ console.log("4");
 // Output: 1, 4, 3, 2
 ```
 
-### Event Loop Rules
-1. First loop: checks callback queue, picks tasks & puts them in callback queue.
-2. While we need callbacks, we put them in the callback queue.
-3. That loop checks the callback queue & if any callback, it executes it.
-4. It attaches the callback from the callback queue only if the callback queue has something.
-5. Event Loop only picks task from callback queue if Call Stack is empty.
-6. Only if Call Stack is empty, it checks the callback queue (any) → microtask queue first.
-
 ---
 
 ## 8. JS Engine Internals
 
-### JS Engine = JIT Compiler (compilation of execution & done 3 things)
-1. **Parsing** → reads JS code, does 3 things
+### JS Engine = JIT Compiler
+1. **Parsing** → reads JS code
 2. **Compilation** → combination of compilation & interpretation
 3. **Execution**
-
-### JS runs code with the help of JS Runtime Environment (browser/Node)
-- **Browser runs JS** — code line by line in environment
-- **JS Engine** is not a piece of machine → it is a piece of code (software)
-- **JS Engine is a combination** of Compilation + Interpretation
 
 ### Memory in JS Engine
 - **Memory Heap** — a global object, shared space where functions & variables are stored
 - **Call Stack** — space where functions are executed in order (shared)
-- **Garbage Collector** — collected & clears unused memory
+- **Garbage Collector** — clears unused memory using **Mark & Sweep** algorithm
 
-### Garbage Collector
-- Uses **Mark & Sweep** algorithm
-- **Inline caching** → used to speed up accessing properties
-- **Garbage** → clears unused memory
-- `reduce` → used to add/even values on a single value
-- After processing, they may return the value back in logic
+### Inline Caching
+- Used to speed up property access on objects.
 
 ---
 
@@ -447,35 +508,21 @@ console.log("4");
 ```js
 const arr = [5, 1, 3, 2, 6];
 
-function double(x) { return x * 2; }
-function triple(x) { return x * 3; }
-
-const doubled = arr.map(double);  // [10, 2, 6, 4, 12]
-const tripled = arr.map(triple);  // [15, 3, 9, 6, 18]
-
-// Binary conversion using map
-const binary = arr.map(x => x.toString(2)); // ["101","1","11","10","110"]
-
-// Arrow shorthand
+const doubled = arr.map(x => x * 2);  // [10, 2, 6, 4, 12]
+const binary  = arr.map(x => x.toString(2)); // binary strings
 const squared = arr.map(x => x * x);
 ```
 
 ### filter — keep elements that pass a test
 ```js
-function isEven(x) {
-  return x % 2 === 0;
-}
-
-const output = arr.filter(isEven); // [2, 6]
-
-// Arrow shorthand
-const odds = arr.filter(x => x % 2 !== 0);
+// filter performs the condition on each element of an array
+const output = arr.filter(x => x % 2 === 0); // [2, 6]
+const odds   = arr.filter(x => x % 2 !== 0);
 ```
 
 ### reduce — collapse to a single value
 ```js
-// reduce(callback, initialValue)
-// acc = accumulator (running result), curr = current element
+// reduce reduces the array to a single value — it returns only one single value
 const sum = arr.reduce((acc, curr) => acc + curr, 0); // 17
 const max = arr.reduce((acc, curr) => acc > curr ? acc : curr, 0); // 6
 ```
@@ -505,7 +552,6 @@ const ageCount = users.reduce((acc, user) => {
 
 ### Polyfill for map (How map works internally)
 ```js
-// Using Array.prototype.calculate (custom map-like method)
 Array.prototype.calculate = function(logic) {
   const output = [];
   for (let i = 0; i < this.length; i++) {
@@ -513,9 +559,7 @@ Array.prototype.calculate = function(logic) {
   }
   return output;
 };
-
-console.log(radius.calculate(area));
-// same as radius.map(area)
+// radius.calculate(area)  ←→  radius.map(area)
 ```
 
 ---
@@ -542,20 +586,35 @@ console.log(a); // 5 — unchanged
 
 ### Reference Types (copied by reference)
 ```js
-const person = { name: "Alice", age: 25 };
-const fruits = ["apple", "banana"];
-function greet() { return "Hello"; }
-```
-
-```js
 let obj1 = { x: 1 };
 let obj2 = obj1; // SAME reference
 obj2.x = 99;
 console.log(obj1.x); // 99 — both changed!
+```
 
-// Clone properly
-const clone1 = Object.assign({}, obj1);  // shallow copy
+### Shallow Copy vs Deep Copy
+
+**Shallow Copy** — creates a new object/array but copies the **reference** for nested objects. If the value changes, the original also changes.
+
+```js
+// Shallow copy methods
+const clone1 = Object.assign({}, obj1);
 const clone2 = { ...obj1 };             // spread (shallow)
+const arrCopy = [...originalArr];
+
+// Problem with shallow copy and nested objects:
+const obj = { a: 1, nested: { b: 2 } };
+const shallow = { ...obj };
+shallow.nested.b = 99;
+console.log(obj.nested.b); // 99 — original affected!
+```
+
+**Deep Copy** — copies the values, not the references. Changing the copy will **not** change the original.
+
+```js
+// Deep copy methods
+const deep1 = JSON.parse(JSON.stringify(obj)); // simple but loses functions/undefined
+const deep2 = structuredClone(obj);            // modern, recommended
 ```
 
 ### typeof
@@ -586,7 +645,7 @@ Array.isArray([]);  // true  (better way to check arrays)
 // Comparison
 >  <  >=  <=
 ==   // loose (type coercion): "5" == 5 → true
-===  // strict (no coercion): "5" === 5 → false 
+===  // strict (no coercion): "5" === 5 → false
 
 // Ternary
 let result = age >= 18 ? "adult" : "minor";
@@ -598,7 +657,7 @@ let result = age >= 18 ? "adult" : "minor";
 
 // Fallback / Short-circuit
 let name = user.name || "Guest";  // fallback for all falsy values
-let val  = a ?? "default";        // fallback only for null/undefined 
+let val  = a ?? "default";        // fallback only for null/undefined
 
 // Optional Chaining
 const city = user?.address?.city;  // undefined instead of TypeError
@@ -808,16 +867,29 @@ btn.removeEventListener("click", handleClick);
 ```
 
 ### Event Phases
-1. **Capture** — event travels window → target (top down)
-2. **Target** — event is at the element
-3. **Bubble** — event travels target → window (bottom up, default)
+1. **Capture** — event travels window → target (top down). The click event triggers on the root first, then occurs to the target.
+2. **Target** — event is at the element.
+3. **Bubble** — event travels target → window (bottom up, default). The event first triggers on the target element and then occurs to the root.
 
 ### Event Delegation (efficient pattern)
 ```js
 // Add ONE listener to parent instead of each child
+// One event listener handles many elements efficiently
 ul.addEventListener("click", (e) => {
   console.log(e.target.textContent);
 });
+```
+
+### Prototype Inheritance
+> Allows an **object to inherit properties and methods from another object**.
+
+```js
+const animal = {
+  speak() { return "Some sound"; }
+};
+
+const dog = Object.create(animal); // dog inherits from animal
+dog.speak(); // "Some sound"
 ```
 
 ---
@@ -825,6 +897,8 @@ ul.addEventListener("click", (e) => {
 ## 17. Async JS — Promises & Async/Await
 
 ### Promises
+> A **Promise** is an object representing the future result of an asynchronous operation.
+
 ```js
 const promise = new Promise((resolve, reject) => {
   if (success) resolve("data");
@@ -843,7 +917,9 @@ Promise.race([p1, p2]).then(first => console.log(first));
 Promise.allSettled([p1, p2]).then(results => console.log(results));
 ```
 
-### Async / Await (syntactic sugar over Promises)
+### Async / Await
+> `async/await` simply allows us to write Promise-based code as if it were synchronous. An `async` function will **always return a Promise**. `await` is used to wait for the Promise.
+
 ```js
 async function fetchData() {
   try {
@@ -913,6 +989,11 @@ function greet({ name, age = 0 }) {
 ```
 
 ### Spread & Rest
+
+**Spread Operator** — used to **copy or merge** arrays/objects.
+
+**Rest Operator** — used to **collect multiple elements** into a single array or object passed as function arguments.
+
 ```js
 // Spread — expand iterable
 const arr2 = [...arr1, 4, 5];
@@ -973,6 +1054,12 @@ dog instanceof Dog;    // true
 dog instanceof Animal; // true
 ```
 
+### Constructor
+> A **constructor** is a special method in a class. It is automatically called when a new object is created using `new`. Used to initialize the object's properties.
+
+### Class
+> A **class** is a blueprint for creating objects with predefined properties and methods.
+
 ---
 
 ## 20. Error Handling
@@ -1002,13 +1089,6 @@ class ValidationError extends Error {
     this.name = "ValidationError";
   }
 }
-
-try {
-  throw new ValidationError("Email is required");
-} catch (e) {
-  if (e instanceof ValidationError) console.log("Validation:", e.message);
-  else throw e; // re-throw unknown errors
-}
 ```
 
 ---
@@ -1016,7 +1096,7 @@ try {
 ## 21. ES Modules
 
 ```js
-// Named exports
+// Named exports — one can have multiple named exports per file
 export const PI = 3.14;
 export function add(a, b) { return a + b; }
 export class User { }
@@ -1057,38 +1137,32 @@ function show() { console.log(this); }
 // Arrow functions → NO own 'this', inherits from surrounding scope
 const obj = {
   name: "Alice",
-  greet: () => console.log(this.name), // this = outer scope (NOT obj) 
+  greet: () => console.log(this.name), // this = outer scope (NOT obj)
   hello() {
-    const inner = () => console.log(this.name); // this = obj 
+    const inner = () => console.log(this.name); // this = obj
     inner();
   }
 };
 ```
 
 ### call, apply, bind
+
+**call** — immediately invokes the function. Allows passing a single argument.
+
+**apply** — same as `call` but pass the arguments into an array.
+
+**bind** — does **not** immediately call the function. It is used to invoke it in the future.
+
 ```js
 function greet(greeting, punctuation) {
   return `${greeting}, ${this.name}${punctuation}`;
 }
 const user = { name: "Alice" };
 
-// call — invoke immediately, spread args
-greet.call(user, "Hello", "!");     // "Hello, Alice!"
-
-// apply — invoke immediately, args as array
-greet.apply(user, ["Hello", "!"]); // "Hello, Alice!"
-
-// bind — returns new function (doesn't invoke)
-const greetAlice = greet.bind(user);
+greet.call(user, "Hello", "!");     // "Hello, Alice!" — immediate
+greet.apply(user, ["Hello", "!"]); // "Hello, Alice!" — immediate, args as array
+const greetAlice = greet.bind(user); // returns new function — NOT immediate
 greetAlice("Hey", ".");            // "Hey, Alice."
-
-// Fix 'this' in event handlers / setTimeout
-class Timer {
-  start() {
-    setTimeout(this.tick.bind(this), 1000);
-  }
-  tick() { console.log("tick"); }
-}
 ```
 
 ---
@@ -1142,7 +1216,248 @@ const obj = Object.fromEntries([["a", 1], ["b", 2]]); // {a:1, b:2}
 
 ---
 
-##  Quick Reference Cheatsheet
+## 25. Currying
+
+> **Currying** is a technique of converting a function that takes **multiple arguments** into a sequence of functions that each take a **single argument**.
+
+```js
+// Normal function
+function multiply(a, b) {
+  return a * b;
+}
+
+// Curried version
+function curriedAdd(a) {
+  return function(b) {
+    return a * b;
+  };
+}
+
+console.log(curriedAdd(2)(3)); // 6
+
+// Arrow function style
+const curry = a => b => a * b;
+console.log(curry(2)(3)); // 6
+```
+
+**Use cases:** partial application, reusable utility functions, functional composition.
+
+---
+
+## 26. IIFE
+
+> **IIFE** (Immediately Invoked Function Expression) — a function that **executes immediately** after being defined.
+
+```js
+(function() {
+  console.log("Hello");
+})();
+
+// Arrow IIFE
+(() => {
+  console.log("Arrow IIFE");
+})();
+
+// With parameters
+(function(name) {
+  console.log(`Hello ${name}`);
+})("Alice");
+```
+
+**Use cases:** avoid polluting global scope, module-like encapsulation.
+
+---
+
+## 27. Prototype & Prototype Inheritance
+
+> **Prototype** — JavaScript's way of **sharing features across objects**.
+
+> **Prototype Inheritance** — allows an object to **inherit properties and methods from another object**.
+
+```js
+function Animal(name) {
+  this.name = name;
+}
+Animal.prototype.speak = function() {
+  return `${this.name} makes a sound.`;
+};
+
+const dog = new Animal("Rex");
+dog.speak(); // "Rex makes a sound." — inherited via prototype
+
+// Check prototype chain
+dog.__proto__ === Animal.prototype; // true
+
+// Object.create
+const proto = {
+  greet() { return `Hello, I'm ${this.name}`; }
+};
+const obj = Object.create(proto);
+obj.name = "Alice";
+obj.greet(); // "Hello, I'm Alice"
+```
+
+Every JS object has a `[[Prototype]]` (accessible via `__proto__`). This forms the **prototype chain** — how JS looks up properties.
+
+---
+
+## 28. Memoization
+
+> **Memoization** is an optimization technique that **stores the results of expensive function calls** so that the same input doesn't need to be recalculated.
+
+```js
+function memoize(fn) {
+  const cache = {};
+  return function(...args) {
+    const key = JSON.stringify(args);
+    if (cache[key] !== undefined) {
+      console.log("From cache");
+      return cache[key];
+    }
+    cache[key] = fn(...args);
+    return cache[key];
+  };
+}
+
+function slowSquare(n) {
+  // imagine this is expensive
+  return n * n;
+}
+
+const fastSquare = memoize(slowSquare);
+fastSquare(5); // computed
+fastSquare(5); // From cache → 25
+```
+
+---
+
+## 29. Polyfills
+
+> A **polyfill** is a piece of code that **provides support for modern features on older browsers** that don't natively support them.
+
+```js
+// Polyfill for Array.prototype.map
+if (!Array.prototype.myMap) {
+  Array.prototype.myMap = function(callback) {
+    const result = [];
+    for (let i = 0; i < this.length; i++) {
+      result.push(callback(this[i], i, this));
+    }
+    return result;
+  };
+}
+
+// Polyfill for Array.prototype.filter
+if (!Array.prototype.myFilter) {
+  Array.prototype.myFilter = function(callback) {
+    const result = [];
+    for (let i = 0; i < this.length; i++) {
+      if (callback(this[i], i, this)) result.push(this[i]);
+    }
+    return result;
+  };
+}
+```
+
+---
+
+## 30. Debouncing
+
+> **Debouncing** — delays a function from running until the **user stops typing or clicking** for a set amount of time.
+
+```js
+function debounce(fn, delay) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+const handleSearch = debounce((query) => {
+  console.log("Searching:", query);
+}, 300);
+
+// handleSearch fires only 300ms after user stops typing
+input.addEventListener("input", e => handleSearch(e.target.value));
+```
+
+**Use cases:** search inputs, resize handlers, button click throttling.
+
+---
+
+## 31. Mutation Observer
+
+> **Mutation Observer** — detects DOM changes dynamically. It **observes and reacts** when nodes are added or removed.
+
+```js
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach(mutation => {
+    console.log("DOM changed:", mutation.type);
+    console.log("Added nodes:", mutation.addedNodes);
+    console.log("Removed nodes:", mutation.removedNodes);
+  });
+});
+
+observer.observe(document.body, {
+  childList: true,   // watch for added/removed children
+  subtree: true      // watch all descendants
+});
+
+// Stop observing
+observer.disconnect();
+```
+
+---
+
+## 32. Memory Leak
+
+> A **memory leak** occurs when **unused data stays in memory** and slows down the app.
+
+**Common causes:**
+- Forgotten `setInterval` / `setTimeout` without `clearInterval` / `clearTimeout`
+- Event listeners not removed after use
+- Closures holding references to large objects
+- Global variables accumulating data
+
+```js
+// Memory leak example
+let arr = [];
+setInterval(() => {
+  arr.push(new Array(1000).fill("data")); // keeps growing, never cleared
+}, 100);
+
+// Fix: clear when done
+const id = setInterval(() => { /* ... */ }, 100);
+clearInterval(id); // when no longer needed
+```
+
+---
+
+## 33. Recursive Functions
+
+> A **recursive function** is a function that **calls itself** to solve problems like factorials, tree traversal, etc.
+
+```js
+// Factorial
+function factorial(n) {
+  if (n <= 1) return 1;         // base case
+  return n * factorial(n - 1);  // recursive call
+}
+factorial(5); // 120
+
+// Sum of array
+function sum(arr) {
+  if (arr.length === 0) return 0;
+  return arr[0] + sum(arr.slice(1));
+}
+```
+
+Every recursive function needs a **base case** to avoid infinite recursion.
+
+---
+
+## Quick Reference Cheatsheet
 
 | Concept | Key Point |
 |---------|-----------|
@@ -1163,5 +1478,14 @@ const obj = Object.fromEntries([["a", 1], ["b", 2]]); // {a:1, b:2}
 | `map` | transform → new array |
 | `filter` | keep elements → new array |
 | `reduce` | collapse → single value |
-
----
+| Currying | multi-arg fn → sequence of single-arg fns |
+| IIFE | executes immediately after definition |
+| Prototype | JS way to share features across objects |
+| Memoization | cache results of expensive function calls |
+| Polyfill | code to support modern features on old browsers |
+| Debouncing | delay fn until user stops interacting |
+| Shallow Copy | copies reference — nested changes affect original |
+| Deep Copy | copies values — nested changes don't affect original |
+| Callback Hell | nested callbacks making code unreadable |
+| Memory Leak | unused data stays in memory, slows app |
+| Recursion | function calls itself; needs a base case |
